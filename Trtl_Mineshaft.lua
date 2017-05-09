@@ -1,7 +1,15 @@
-
+GPS = {0,0,0}
+direction = 1
 
 -----------------------------------------------------
 --This section is for general movement functions
+
+--*********** changeDirection
+-- This function keeps track of the direction of the turtle when the turtle turns
+function changeDirection(change)
+	direction = (direction + change)% 4
+	print("New direction is "..direction)
+end
 
 --*********** forward
 -- This function takes one paramater and will move the 
@@ -21,11 +29,14 @@ function forward(times)
 end
 
 function turn(direction, times)
+	print("Turning "..direction.." ".." times")
 	for i=0,times do
 		if direction="left" then
 			turtle.turnLeft()
+			changeDirection(-1)
 		else
 			turtle.turnRight()
+			changeDirection(1)
 		end
 	end
 end
@@ -42,3 +53,5 @@ end
 
 function makeShaft()
 end
+
+turn('right',3)
