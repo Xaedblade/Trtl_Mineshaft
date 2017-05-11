@@ -1,5 +1,5 @@
 GPS = {0,0,0}
-direction = 1
+direction = 0
 
 -----------------------------------------------------
 --This section is for general movement functions
@@ -29,13 +29,13 @@ function forward(times)
 end
 
 function turn(direction, times)
-	print("Turning "..direction.." ".." times")
-	for i=0,times do
-		if direction="left" then
-			turtle.turnLeft()
+	print("Turning "..direction.." "..times.." times")
+	for i=1,times do
+		if direction=="left" then
+			--turtle.turnLeft()
 			changeDirection(-1)
 		else
-			turtle.turnRight()
+			--turtle.turnRight()
 			changeDirection(1)
 		end
 	end
@@ -54,4 +54,9 @@ end
 function makeShaft()
 end
 
+-- test
+print("Direction to start is: "..direction)
 turn('right',3)
+print("Direction to start is: "..direction)
+turn('left',3)
+print("Direction to fnish is: "..direction)
