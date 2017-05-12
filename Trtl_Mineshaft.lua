@@ -1,4 +1,6 @@
-GPS = {0,0,0}
+x=0
+z=0
+y=0
 direction = 0
 
 -----------------------------------------------------
@@ -8,7 +10,18 @@ direction = 0
 -- This function keeps track of the direction of the turtle when the turtle turns
 function changeDirection(change)
 	direction = (direction + change)% 4
-	print("New direction is "..direction)
+end
+
+function updateCoords(_direction)
+	if direction == 0 then
+		x=x+1
+	elseif direction == 1 then
+		z=z+1
+	elseif direction == 2 then
+		x=x-1
+	else
+		z=z-1
+	end
 end
 
 --*********** forward
@@ -17,14 +30,15 @@ end
 -- it and attack entities in front of it
 function forward(times)
 	print("Moving forward "..times.." times")
-    for i=0,times do
-		while not turtle.forward() do -- can't move forward so make a check for a block
+    for i=1,times do
+		while not true do--turtle.forward() do -- can't move forward so make a check for a block
 			print("Blocked")
 			if turtle.detect() then -- there is not a block must be an entity there for attack
 				print("Attacking entity")
 				turtle.attack()
 			end
 		end
+		updateCoords(direction)
 	end
 end
 
@@ -47,16 +61,21 @@ end
 function up(times)
 end
 
-function back(times)
-end
-
-
 function makeShaft()
 end
 
--- test
-print("Direction to start is: "..direction)
-turn('right',3)
-print("Direction to start is: "..direction)
+-- test 2
+print("Test 2")
+turn('right',4)
+print("Starting coords from: x="..x.." | z="..z)
+forward(5)
+print("Updating coords to: x="..x.." | z="..z)
 turn('left',3)
-print("Direction to fnish is: "..direction)
+forward(1)
+print("Updating coords to: x="..x.." | z="..z)
+turn('right',1)
+forward(1)
+print("Updating coords to: x="..x.." | z="..z)
+turn('right',1)
+forward(6)
+print("Updating coords to: x="..x.." | z="..z)
