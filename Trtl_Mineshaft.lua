@@ -24,8 +24,13 @@ function updateCoords(_direction)
 	end
 end
 
-function updateHeight(change)
-	y=y+change
+function updateHeight(change,_direction)
+	print("Going ".._direction.." "..change)
+	if _direction=="up" then
+		y=y+change
+	else
+		y=y-change
+	end
 end
 
 --*********** forward
@@ -75,22 +80,10 @@ end
 
 
 
--- test 2
-print("Test 2")
-print("Starting fr: d="..direction.." => 4 | x="..x.." | z="..z)
-turn('right',4)
-print("d = "..direction)
-forward(5)
-print("Updating to: d="..direction.." => 5 | x="..x.." | z="..z)
-turn('left',3)
-print("d = "..direction)
-forward(1)
-print("Updating to: d="..direction.." => 1 | x="..x.." | z="..z)
-turn('right',1)
-print("d = "..direction)
-forward(1)
-print("Updating to: d="..direction.." => 1 | x="..x.." | z="..z)
-turn('right',1)
-print("d = "..direction)
-forward(6)
-print("Updating to: d="..direction.." => 6 | x="..x.." | z="..z)
+-- test 3
+print("Test 3")
+print("Starting fr: d="..direction.." => 4 | x="..x.." | z="..z.." | y="..y)
+updateHeight(2,"up")
+updateHeight(2,"down")
+updateHeight(5,"down")
+print("updating to: d="..direction.." => 4 | x="..x.." | z="..z.." | y="..y)
