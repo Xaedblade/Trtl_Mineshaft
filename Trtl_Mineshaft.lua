@@ -43,12 +43,9 @@ end
 -- in front of it
 function forward(times)
 	for i=1,times do
-		
-		--turtle.forward() do -- can't move
 		--forward so make a check for a block
-		while not true do
+		while not turtle.forward() do
 			print("Blocked")
-
 			-- there is not a block must
 			-- be an entity there for attack
 			if turtle.detect() then 
@@ -63,32 +60,61 @@ end
 function turn(direction,times)
 	for i=1,times do
 		if direction=="left" then
-			--turtle.turnLeft()
+			turtle.turnLeft()
 			updateDirection(-1)
 		else
-			--turtle.turnRight()
+			turtle.turnRight()
 			updateDirection(1)
 		end
 	end
 end
 
 function down(times)
-	times = times * -1
-	updateHeight(times)
+	for i=1, times do
+		if true then--turtle.down() then
+			updateHeight(-1)
+		end
+	end
 end
 
 function up(times)
 	updateHeight(times)
 end
 
-function makeShaft()
+function digLevel()
 
+	if not false then --turtle.inspectDown() == 7 then
+		print("turtle digs down")--turtle.digDown()
+	else
+		print("Reached the bottom")
+		return false
+	end
+	
+	if not false then--turtle.inspect() == 7 then
+		print("turtle digs")--turtle.dig()
+	else
+		print("Can't dig")
+		return false
+	end
+	
+	return true
+
+end
+
+function makeShaft()
+	while digLevel() do
+		down(1)
+		print("Digging down")
+	end
 end
 
 -----------------------------------------------------
 -- Tests
 -----------------------------------------------------
 
+function test4()
+	makeShaft()
+end
 
 function test3()
 
@@ -133,4 +159,4 @@ end
 function test1()
 end
 
-test3()
+test4()
