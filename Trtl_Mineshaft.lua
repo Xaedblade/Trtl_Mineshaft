@@ -118,9 +118,8 @@ end
 function makeShaft()
 	while digLevel() do
 		down(1)
-		print("Digging down")
 	end
-  for i=0, y do
+  while y<0 do
     up(1)
     print("y ="..y)
   end
