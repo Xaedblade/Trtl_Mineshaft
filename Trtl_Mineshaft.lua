@@ -34,12 +34,12 @@ function updateHeight(change)
 end
 
 -----------------------------------------------------
--- 
--- 
+--
+--
 -----------------------------------------------------
--- This function takes one paramater and will 
--- move the turtle forward x blocks and clear 
--- blocks in front of it and attack entities 
+-- This function takes one paramater and will
+-- move the turtle forward x blocks and clear
+-- blocks in front of it and attack entities
 -- in front of it
 function forward(times)
 	for i=1,times do
@@ -48,7 +48,7 @@ function forward(times)
 			print("Blocked")
 			-- there is not a block must
 			-- be an entity there for attack
-			if turtle.detect() then 
+			if turtle.detect() then
 				print("Attacking entity")
 				turtle.attack()
 			end
@@ -71,34 +71,48 @@ end
 
 function down(times)
 	for i=1, times do
-		if true then--turtle.down() then
+		if turtle.down() then
 			updateHeight(-1)
+    else
+      print("stuck")
 		end
 	end
 end
 
 function up(times)
-	updateHeight(times)
+	for i=1, times do
+		if turtle.up() then
+			updateHeight(1)
+		end
+	end
 end
 
 function digLevel()
+  result = true
 
-	if not false then --turtle.inspectDown() == 7 then
-		print("turtle digs down")--turtle.digDown()
-	else
-		print("Reached the bottom")
-		return false
-	end
-	
-	if not false then--turtle.inspect() == 7 then
-		print("turtle digs")--turtle.dig()
-	else
-		print("Can't dig")
-		return false
-	end
-	
-	return true
+  isBlock, Block = turtle.inspect()
+  if isBlock then
+    if not (Block.name == 'minecraft:bedrock') then
+      print("turtle digs")
+      turtle.dig()
+    else
+      print("Can't dig")
+      result = false
+    end
+  end
 
+  isDnBlock, dnBlock = turtle.inspectDown()
+  if isDnBlock then
+  	if not (dnBlock.name == 'minecraft:bedrock') then
+  		print("turtle digs down")
+  		turtle.digDown()
+  	else
+  		print("Reached the bottom")
+  		result = false
+  	end
+  end
+
+	return result
 end
 
 function makeShaft()
@@ -106,6 +120,10 @@ function makeShaft()
 		down(1)
 		print("Digging down")
 	end
+  for i=0, y do
+    up(1)
+    print("y ="..y)
+  end
 end
 
 -----------------------------------------------------
