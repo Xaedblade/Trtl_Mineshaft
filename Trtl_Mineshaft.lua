@@ -37,7 +37,7 @@ end
 --
 --
 -----------------------------------------------------
--- This function takes one paramater and will
+-- This function takes one parameter and will
 -- move the turtle forward x blocks and clear
 -- blocks in front of it and attack entities
 -- in front of it
@@ -90,21 +90,19 @@ end
 function digLevel()
   result = true
 
-  isBlock, Block = turtle.inspect()
-  if isBlock then
-    if not (Block.name == 'minecraft:bedrock') then
-      print("turtle digs")
-      turtle.dig()
-    else
-      print("Can't dig")
-      result = false
-    end
-  end
+  --isBlock, Block = turtle.inspect()
+  --if isBlock then
+  --  if not (Block.name == 'minecraft:bedrock') then
+  --    turtle.dig()
+  --  else
+  --    print("Can't dig")
+  --    result = false
+  --  end
+  --end
 
   isDnBlock, dnBlock = turtle.inspectDown()
   if isDnBlock then
   	if not (dnBlock.name == 'minecraft:bedrock') then
-  		print("turtle digs down")
   		turtle.digDown()
   	else
   		print("Reached the bottom")
@@ -115,19 +113,120 @@ function digLevel()
 	return result
 end
 
+function clearColumn()
+	turtle.dig()
+	forward(1)
+	turtle.digUp()
+	turtle.digDown()
+end
+
+function clearRow(length)
+	for i=1,length do
+		clearColumn()
+	end
+end
+
+function clearArea()
+	for i=1, 4 do
+		clearRow(2)
+		turn("left",1)
+	end
+end
+
+function returnHome()
+	--return to 0 x coordinate
+	while x~=0 and z~=0 do
+		if x<0 then
+			while direction ~= 0 do
+				turn('left',1)
+			end
+			while x<0 do
+				forward(1)
+				print('x='..x..' z='..z)
+			end
+		elseif x>0 then
+			while direction ~=2 do
+				turn('left',1)
+			end
+			while x>0 do
+				forward(1)
+				print('x='..x..' z='..z)
+			end
+		end
+		--return to 0 z coordinate
+		if z<0 then
+			while direction ~= 1 do
+				turn('left',1)
+			end
+			while z<0 do
+				forward(1)
+				print('x='..x..' z='..z)
+			end
+		elseif z>0 then
+			while direction ~= 3 do
+				turn('left',1)
+			end
+			while z>0 do
+				forward(1)
+				print('x='..x..' z='..z)
+			end
+		end
+
+		-- return to 0 y coordinate
+		if y<0 then
+			while y<0 do
+				up(1)
+				print('y='..y)
+			end
+		elseif y>0 then
+			while y>0 do
+				down(1)
+				print('y='..y)
+			end
+		end
+	end
+
+	while direction ~= 0 do
+		turn('left',1)
+	end
+end
+
+function clearBase()
+	clearRow(2)
+	turn('left',1)
+	clearColumn()
+	turn('left',1)
+	clearRow(2)
+	turn('right',1)
+	clearColumn()
+	turn('right',1)
+	clearRow(2)
+end
+
 function makeShaft()
 	while digLevel() do
 		down(1)
 	end
-  while y<0 do
-    up(1)
-    print("y ="..y)
-  end
 end
 
 -----------------------------------------------------
 -- Tests
 -----------------------------------------------------
+
+function test6()
+	makeShaft()
+	clearBase()
+	returnHome()
+end
+
+function test5()
+	forward(7)
+	turn('left',1)
+	forward(5)
+	returnHome()
+	clearBase()
+end
+
 
 function test4()
 	makeShaft()
@@ -176,4 +275,4 @@ end
 function test1()
 end
 
-test4()
+test6()
